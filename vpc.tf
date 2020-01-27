@@ -3,9 +3,9 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames   = "true"
 
   tags = {
-    Name            = "${var.environment}-${var.task-2}"
+    Name            = "${var.environment}-${var.project}"
     Environment     = "${var.environment}"
-    Project         = "${var.task-2}"
+    Project         = "${var.project}"
   }
 }
 
@@ -15,11 +15,11 @@ resource "aws_subnet" "public_subnets" {
   availability_zone       = "${element(var.azs,count.index)}"
   cidr_block              = "${element(var.public_subnets,count.index)}"
   map_public_ip_on_launch = true
-
+  
   tags = {
-    Name              = "${var.environment}-${var.task-2}-Public_Subnet-${count.index+1}"
+    Name              = "${var.environment}-${var.project}-Public_Subnet-${count.index+1}"
     Environment       = "${var.environment}"
-    Project           = "${var.task-2}"
+    Project           = "${var.project}"
   }
 }
 
@@ -31,9 +31,9 @@ resource "aws_subnet" "private_subnets" {
   map_public_ip_on_launch = false
   
   tags = {
-    Name                  = "${var.environment}-${var.task-2}-Private_Subnet-${count.index+1}"
+    Name                  = "${var.environment}-${var.project}-Private_Subnet-${count.index+1}"
     Environment           = "${var.environment}"
-    Project               = "${var.task-2}"
+    Project               = "${var.project}"
   }
 }
 
@@ -41,9 +41,9 @@ resource "aws_internet_gateway" "igw" {
   vpc_id            = "${aws_vpc.main.id}"
 
   tags = {
-    Name            = "${var.environment}-${var.task-2}-Internet_Gateway"
+    Name            = "${var.environment}-${var.project}-Internet_Gateway"
     Environment     = "${var.environment}"
-    Project         = "${var.task-2}"
+    Project         = "${var.project}"
   }
 }
 
@@ -57,7 +57,7 @@ resource "aws_route_table" "public_route_table" {
     tags = {
     Name          = "${var.environment}-${var.project}-Public_Route_Table"
     Environment   = "${var.environment}"
-    Project       = "${var.task-2}"
+    Project       = "${var.project}"
   }
 }
 
@@ -72,9 +72,9 @@ resource "aws_eip" "eip" {
   vpc            = true
 
   tags = {
-    Name          = "${var.environment}-${var.task-2}-Elastic_IP-${count.index+1}"
+    Name          = "${var.environment}-${var.project}-Elastic_IP-${count.index+1}"
     Environment   = "${var.environment}"
-    Project       = "${var.task-2}"
+    Project       = "${var.project}"
   }
 }
 
@@ -87,7 +87,7 @@ resource "aws_nat_gateway" "nat" {
   tags = {
     Name          = "${var.environment}-${var.project}-Nat_Gateway-${count.index+1}"
     Environment   = "${var.environment}"
-    Project       = "${var.task-2}"
+    Project       = "${var.project}"
   }
 }
 
@@ -102,7 +102,7 @@ resource "aws_route_table" "private_route_table" {
     tags = {
     Name             = "${var.environment}-${var.project}-Private_Route_Table-${count.index+1}"
     Environment      = "${var.environment}"
-    Project          = "${var.task-2}"
+    Project          = "${var.project}"
   }
 }
 
